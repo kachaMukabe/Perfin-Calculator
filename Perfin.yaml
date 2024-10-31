@@ -1,0 +1,394 @@
+openapi: 3.0.0
+info:
+  title: PerFin Calculator API
+  version: 1.0.0
+  description: Personal Finance calculator API that does those pesky calculations for you
+  license:
+    name: MIT License
+    url: https://www.mit.edu/~amini/LICENSE.md
+paths:
+  /simple-interest:
+    post:
+      summary: Calculate simple interest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                principal:
+                  type: number
+                  format: float
+                rate:
+                  type: number
+                  format: float
+                time:
+                  type: number
+                  format: float
+                period:
+                  type: string
+                  description: Order Status
+                  enum:
+                    - years
+                    - months
+                    - days
+                    - days (365)
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
+                    format: float
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Basic Interest
+  /compound-interest:
+    post:
+      summary: Calculate compound interest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                principal:
+                  type: number
+                  format: float
+                annual_rate:
+                  type: number
+                  format: float
+                time:
+                  type: number
+                  format: float
+                coumpund:
+                  type: string
+                  description: Period to compound by
+                  enum: 
+                    - annually
+                    - quarterly
+                    - monthly
+                    - daily
+                    - daily (365)
+                    - continously
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
+                    format: float
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Basic Interest
+  /loan-payment:
+    post:
+      summary: Calculate loan payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                principal:
+                  type: number
+                  format: float
+                  description: The principal loan amount.
+                rate:
+                  type: number
+                  format: float
+                  description: The annual interest rate (as a decimal).
+                num_payments:
+                  type: integer
+                  description: The total number of payments.
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment:
+                    type: number
+                    format: float
+                    description: The calculated periodic payment amount.
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Loans
+  /future-value:
+    post:
+      summary: Calculate future value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                principal:
+                  type: number
+                  format: float
+                  description: The initial investment amount.
+                rate:
+                  type: number
+                  format: float
+                  description: The annual interest rate (as a decimal).
+                time:
+                  type: number
+                  format: float
+                  description: The time period in years.
+                coumpund:
+                  type: string
+                  description: Period to compound the interest by
+                  enum: 
+                    - annually
+                    - quarterly
+                    - monthly
+                    - daily
+                    - daily (365)
+                    - continously
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  future_value:
+                    type: number
+                    format: float
+                    description: The calculated future value.
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Investments
+  /inflation-adjusted-return:
+    post:
+      summary: Calculate inflation-adjusted return
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nominal_rate:
+                  type: number
+                  format: float
+                  description: The nominal rate of return (as a decimal).
+                inflation_rate:
+                  type: number
+                  format: float
+                  description: The annual inflation rate (as a decimal).
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  real_rate_of_return:
+                    type: number
+                    format: float
+                    description: The calculated real rate of return (as a decimal).
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Investments
+  /fixed-deposit-maturity:
+    post:
+      summary: Calculate fixed deposit maturity value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                principal:
+                  type: number
+                  format: float
+                  description: The principal deposit amount.
+                rate:
+                  type: number
+                  format: float
+                  description: The annual interest rate (as a decimal).
+                time:
+                  type: number
+                  format: float
+                  description: The time period in years.
+                compounding_frequency:
+                  type: string
+                  enum:
+                    - annually
+                    - semi-annually
+                    - quarterly
+                    - monthly
+                    - daily
+                  description: The frequency of interest compounding.
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  maturity_value:
+                    type: number
+                    format: float
+                    description: The calculated maturity value of the fixed deposit.
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Investments
+  /investment-roi:
+    post:
+      summary: Calculate return on investment (ROI)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                initial_investment:
+                  type: number
+                  format: float
+                  description: The initial investment amount.
+                earnings:
+                  type: number
+                  format: float
+                  description: The total earnings from the investment.
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  roi:
+                    type: number
+                    format: float
+                    description: The calculated return on investment (as a decimal).
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Investments
+  /salary-growth-rate:
+    post:
+      summary: Calculate your salary growth rate over a period of years
+      description: Allows you to compare your salary growth rate to inflation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  salary:
+                    type: number
+                    format: float
+                    description: Salary.
+                  year:
+                    type: number
+                    format: int
+                    example: 2024
+                    description: Year of salary change.
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  percentage:
+                    type: number
+                    format: float
+                    description: The calculated percentage increase of salary over the period.
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Wealth Building
+  /financial-independence-number:
+    post:
+      summary: Calculate Financial Independence (FI) Number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                annual_expenses:
+                  type: number
+                  format: float
+                  description: Your estimated annual expenses in retirement.
+                withdrawal_rate:
+                  type: number
+                  format: float
+                  description: Your planned safe withdrawal rate (as a decimal, e.g., 0.04 for 4%).
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fi_number:
+                    type: number
+                    format: float
+                    description: Your calculated FI number (the nest egg you need).
+        '400':
+          description: Invalid input parameters
+        '422':
+          description: Validation exception
+      tags:
+        - Wealth Building
+tags:
+  - name: Basic Interest
+    description: These are basic interest calculations
+  - name: Loans
+    description: Calculations for loans
+  - name: Investments
+    description: Calculations for all investment needs
+  - name: Wealth Building
+    description: Interesting Calculations for wealth building
