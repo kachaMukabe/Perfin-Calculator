@@ -2,12 +2,13 @@ package api
 
 import (
 	"context"
-	"github.com/rs/zerolog"
+	"math"
 	"net/http"
 	"os"
 	"time"
-)
 
+	"github.com/rs/zerolog"
+)
 
 // APIHandler is a type to give the api functions below access to a common logger
 // any any other shared objects
@@ -30,7 +31,7 @@ func (h *APIHandler) WithLogger(logger zerolog.Logger) *APIHandler {
 }
 
 // Calculate compound interest
-func (h *APIHandler) POSTCompoundInterest(ctx context.Context, reqBody ) (Response, error) {
+func (h *APIHandler) POSTCompoundInterest(ctx context.Context, reqBody CompoundinterestBody) (Response, error) {
 	// TODO: implement the POSTCompoundInterest function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -38,12 +39,36 @@ func (h *APIHandler) POSTCompoundInterest(ctx context.Context, reqBody ) (Respon
 	// return NewResponse(400, {}, "", responseHeaders), nil
 
 	// return NewResponse(422, {}, "", responseHeaders), nil
+	var n float32
+	switch reqBody.Compound {
+	case "annually":
+		n = 1
+	case "semiannually":
+		n = 2
+	case "quarterly":
+		n = 4
+	case "monthly":
+		n = 12
+	default:
+		return NewResponse(http.StatusBadRequest, ErrorMsg{"invalid compounding frequency"}, "application/json", nil), nil
+	}
 
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTCompoundInterest operation has not been implemented yet"}, "application/json", nil), nil
+	// Compound Interest formula: A = P * (1 + r/n)^(nt)
+	// where A = final amount, P = principal, r = annual rate, t = time, and n = frequency
+	interest_rate := reqBody.AnnualRate / 100
+	finalAmount := reqBody.Principal * float32(math.Pow(float64(1+interest_rate/n), float64(n*reqBody.Time)))
+
+	// Prepare response body
+	responseBody := map[string]float32{
+		"total": finalAmount,
+	}
+
+	// Create and return the response
+	return NewResponse(http.StatusOK, responseBody, "application/json", nil), nil
 }
 
 // Calculate Financial Independence (FI) Number
-func (h *APIHandler) POSTFinancialIndependenceNumber(ctx context.Context, reqBody ) (Response, error) {
+func (h *APIHandler) POSTFinancialIndependenceNumber(ctx context.Context, reqBody FinancialIndependenceNumberBody) (Response, error) {
 	// TODO: implement the POSTFinancialIndependenceNumber function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -52,11 +77,22 @@ func (h *APIHandler) POSTFinancialIndependenceNumber(ctx context.Context, reqBod
 
 	// return NewResponse(422, {}, "", responseHeaders), nil
 
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTFinancialIndependenceNumber operation has not been implemented yet"}, "application/json", nil), nil
+	financialIndependenceNumber := reqBody.AnnualExpenses / reqBody.WithdrawalRate
+
+	// Round FIN to two decimal places
+	financialIndependenceNumber = float32(math.Round(float64(financialIndependenceNumber)*100) / 100)
+
+	// Prepare response body
+	responseBody := map[string]float32{
+		"fi_number": financialIndependenceNumber,
+	}
+
+	// Create and return the response
+	return NewResponse(http.StatusOK, responseBody, "application/json", nil), nil
 }
 
 // Calculate fixed deposit maturity value
-func (h *APIHandler) POSTFixedDepositMaturity(ctx context.Context, reqBody ) (Response, error) {
+func (h *APIHandler) POSTFixedDepositMaturity(ctx context.Context, reqBody FixedDepositMaturityBody) (Response, error) {
 	// TODO: implement the POSTFixedDepositMaturity function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -69,7 +105,7 @@ func (h *APIHandler) POSTFixedDepositMaturity(ctx context.Context, reqBody ) (Re
 }
 
 // Calculate future value
-func (h *APIHandler) POSTFutureValue(ctx context.Context, reqBody ) (Response, error) {
+func (h *APIHandler) POSTFutureValue(ctx context.Context, reqBody FutureValueBody) (Response, error) {
 	// TODO: implement the POSTFutureValue function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -82,7 +118,7 @@ func (h *APIHandler) POSTFutureValue(ctx context.Context, reqBody ) (Response, e
 }
 
 // Calculate inflation-adjusted return
-func (h *APIHandler) POSTInflationAdjustedReturn(ctx context.Context, reqBody ) (Response, error) {
+func (h *APIHandler) POSTInflationAdjustedReturn(ctx context.Context, reqBody InflationAdjustedReturnBody) (Response, error) {
 	// TODO: implement the POSTInflationAdjustedReturn function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -95,7 +131,7 @@ func (h *APIHandler) POSTInflationAdjustedReturn(ctx context.Context, reqBody ) 
 }
 
 // Calculate return on investment (ROI)
-func (h *APIHandler) POSTInvestmentRoi(ctx context.Context, reqBody ) (Response, error) {
+func (h *APIHandler) POSTInvestmentRoi(ctx context.Context, reqBody InvestmentRoiBody) (Response, error) {
 	// TODO: implement the POSTInvestmentRoi function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -108,7 +144,7 @@ func (h *APIHandler) POSTInvestmentRoi(ctx context.Context, reqBody ) (Response,
 }
 
 // Calculate loan payment
-func (h *APIHandler) POSTLoanPayment(ctx context.Context, reqBody ) (Response, error) {
+func (h *APIHandler) POSTLoanPayment(ctx context.Context, reqBody LoanPaymentBody) (Response, error) {
 	// TODO: implement the POSTLoanPayment function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -135,7 +171,7 @@ func (h *APIHandler) POSTSalaryGrowthRate(ctx context.Context) (Response, error)
 }
 
 // Calculate simple interest
-func (h *APIHandler) POSTSimpleInterest(ctx context.Context, reqBody ) (Response, error) {
+func (h *APIHandler) POSTSimpleInterest(ctx context.Context, reqBody SimpleInterestBody) (Response, error) {
 	// TODO: implement the POSTSimpleInterest function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -144,6 +180,13 @@ func (h *APIHandler) POSTSimpleInterest(ctx context.Context, reqBody ) (Response
 
 	// return NewResponse(422, {}, "", responseHeaders), nil
 
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTSimpleInterest operation has not been implemented yet"}, "application/json", nil), nil
-}
+	simpleInterest := reqBody.Principal * (reqBody.Rate / 100) * reqBody.Time
+	total := reqBody.Principal + simpleInterest
 
+	// Prepare response body
+	responseBody := map[string]float32{
+		"total": total,
+	}
+
+	return NewResponse(http.StatusOK, responseBody, "application/json", nil), nil
+}
