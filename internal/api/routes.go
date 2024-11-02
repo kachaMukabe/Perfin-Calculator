@@ -1,10 +1,10 @@
 package api
 
 import (
-	"github.com/gorilla/mux"
 	"net/http"
-)
 
+	"github.com/gorilla/mux"
+)
 
 type Route struct {
 	Name    string
@@ -32,42 +32,37 @@ func (h *APIHandler) GetRoutes() Routes {
 			"/compound-interest",
 			"POST",
 			h.HandlePOSTCompoundInterest,
-		},{
+		}, {
 			"POSTFinancialIndependenceNumber",
 			"/financial-independence-number",
 			"POST",
 			h.HandlePOSTFinancialIndependenceNumber,
-		},{
+		}, {
 			"POSTFixedDepositMaturity",
 			"/fixed-deposit-maturity",
 			"POST",
 			h.HandlePOSTFixedDepositMaturity,
-		},{
-			"POSTFutureValue",
-			"/future-value",
-			"POST",
-			h.HandlePOSTFutureValue,
-		},{
+		}, {
 			"POSTInflationAdjustedReturn",
 			"/inflation-adjusted-return",
 			"POST",
 			h.HandlePOSTInflationAdjustedReturn,
-		},{
+		}, {
 			"POSTInvestmentRoi",
 			"/investment-roi",
 			"POST",
 			h.HandlePOSTInvestmentRoi,
-		},{
+		}, {
 			"POSTLoanPayment",
 			"/loan-payment",
 			"POST",
 			h.HandlePOSTLoanPayment,
-		},{
+		}, {
 			"POSTSalaryGrowthRate",
 			"/salary-growth-rate",
 			"POST",
 			h.HandlePOSTSalaryGrowthRate,
-		},{
+		}, {
 			"POSTSimpleInterest",
 			"/simple-interest",
 			"POST",
@@ -75,4 +70,3 @@ func (h *APIHandler) GetRoutes() Routes {
 		},
 	}
 }
-

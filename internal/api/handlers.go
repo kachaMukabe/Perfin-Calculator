@@ -261,34 +261,6 @@ func (h *APIHandler) HandlePOSTFixedDepositMaturity(w http.ResponseWriter, r *ht
 	}
 }
 
-// HandlePOSTFutureValue handles parsing input to pass to the POSTFutureValue operation and sends responses back to the client
-func (h *APIHandler) HandlePOSTFutureValue(w http.ResponseWriter, r *http.Request) {
-	var err error
-	var reqBody FutureValueBody
-	decoder := json.NewDecoder(r.Body)
-	decoder.DisallowUnknownFields()
-	if err := decoder.Decode(&reqBody); err != nil {
-		ErrorResponseWithMsg(http.StatusBadRequest, "request body was not able to be parsed successfully ''", w)
-		return
-	}
-	if err := reqBody.Validate(); err != nil {
-		errMsg := fmt.Errorf("request body was parsed successfully but failed validation, err: %w", err)
-		ErrorResponseWithMsg(http.StatusBadRequest, errMsg.Error(), w)
-		return
-	}
-
-	response, err := h.POSTFutureValue(r.Context(), reqBody)
-	if err != nil {
-		ErrorResponse(http.StatusInternalServerError, w)
-		h.logger.Error().Msgf("POSTFutureValue returned err: %s", err)
-	}
-
-	if err = response.Send(w); err != nil {
-		ErrorResponse(http.StatusInternalServerError, w)
-		h.logger.Error().Msgf("POSTFutureValue was unable to send it's response, err: %s", err)
-	}
-}
-
 // HandlePOSTInflationAdjustedReturn handles parsing input to pass to the POSTInflationAdjustedReturn operation and sends responses back to the client
 func (h *APIHandler) HandlePOSTInflationAdjustedReturn(w http.ResponseWriter, r *http.Request) {
 	var err error
@@ -376,7 +348,14 @@ func (h *APIHandler) HandlePOSTLoanPayment(w http.ResponseWriter, r *http.Reques
 // HandlePOSTSalaryGrowthRate handles parsing input to pass to the POSTSalaryGrowthRate operation and sends responses back to the client
 func (h *APIHandler) HandlePOSTSalaryGrowthRate(w http.ResponseWriter, r *http.Request) {
 	var err error
-	response, err := h.POSTSalaryGrowthRate(r.Context())
+	var reqBody []SalaryGrowthRateBody
+	decoder := json.NewDecoder(r.Body)
+	decoder.DisallowUnknownFields()
+	if err := decoder.Decode(&reqBody); err != nil {
+		ErrorResponseWithMsg(http.StatusBadRequest, "request body was not able to be parsed successfully ''", w)
+		return
+	}
+	response, err := h.POSTSalaryGrowthRate(r.Context(), reqBody)
 	if err != nil {
 		ErrorResponse(http.StatusInternalServerError, w)
 		h.logger.Error().Msgf("POSTSalaryGrowthRate returned err: %s", err)

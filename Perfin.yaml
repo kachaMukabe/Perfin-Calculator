@@ -136,56 +136,6 @@ paths:
           description: Validation exception
       tags:
         - Loans
-  /future-value:
-    post:
-      summary: Calculate future value
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                principal:
-                  type: number
-                  format: float
-                  description: The initial investment amount.
-                rate:
-                  type: number
-                  format: float
-                  description: The annual interest rate (as a decimal).
-                time:
-                  type: number
-                  format: float
-                  description: The time period in years.
-                coumpund:
-                  type: string
-                  description: Period to compound the interest by
-                  enum: 
-                    - annually
-                    - quarterly
-                    - monthly
-                    - daily
-                    - daily (365)
-                    - continously
-      responses:
-        '200':
-          description: Successful calculation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  future_value:
-                    type: number
-                    format: float
-                    description: The calculated future value.
-        '400':
-          description: Invalid input parameters
-        '422':
-          description: Validation exception
-      tags:
-        - Investments
   /inflation-adjusted-return:
     post:
       summary: Calculate inflation-adjusted return

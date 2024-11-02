@@ -5,6 +5,7 @@ import (
 	"math"
 	"net/http"
 	"os"
+	"sort"
 	"time"
 
 	"github.com/rs/zerolog"
@@ -100,21 +101,32 @@ func (h *APIHandler) POSTFixedDepositMaturity(ctx context.Context, reqBody Fixed
 	// return NewResponse(400, {}, "", responseHeaders), nil
 
 	// return NewResponse(422, {}, "", responseHeaders), nil
+	var n float32
+	switch reqBody.CompoundingFrequency {
+	case "annually":
+		n = 1
+	case "semiannually":
+		n = 2
+	case "quarterly":
+		n = 4
+	case "monthly":
+		n = 12
+	default:
+		return NewResponse(http.StatusBadRequest, ErrorMsg{"invalid compounding frequency"}, "application/json", nil), nil
+	}
 
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTFixedDepositMaturity operation has not been implemented yet"}, "application/json", nil), nil
-}
+	// Compound Interest formula: A = P * (1 + r/n)^(nt)
+	// where A = final amount, P = principal, r = annual rate, t = time, and n = frequency
+	interest_rate := reqBody.Rate / 100
+	finalAmount := reqBody.Principal * float32(math.Pow(float64(1+interest_rate/n), float64(n*reqBody.Time)))
 
-// Calculate future value
-func (h *APIHandler) POSTFutureValue(ctx context.Context, reqBody FutureValueBody) (Response, error) {
-	// TODO: implement the POSTFutureValue function to return the following responses
+	// Prepare response body
+	responseBody := map[string]float32{
+		"maturity_value": finalAmount,
+	}
 
-	// return NewResponse(200, {}, "application/json", responseHeaders), nil
-
-	// return NewResponse(400, {}, "", responseHeaders), nil
-
-	// return NewResponse(422, {}, "", responseHeaders), nil
-
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTFutureValue operation has not been implemented yet"}, "application/json", nil), nil
+	// Create and return the response
+	return NewResponse(http.StatusOK, responseBody, "application/json", nil), nil
 }
 
 // Calculate inflation-adjusted return
@@ -126,8 +138,20 @@ func (h *APIHandler) POSTInflationAdjustedReturn(ctx context.Context, reqBody In
 	// return NewResponse(400, {}, "", responseHeaders), nil
 
 	// return NewResponse(422, {}, "", responseHeaders), nil
+	inflationAdjustedReturn := ((1 + (reqBody.NominalRate / 100)) / (1 + (reqBody.InflationRate / 100))) - 1
 
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTInflationAdjustedReturn operation has not been implemented yet"}, "application/json", nil), nil
+	inflationAdjustedReturn = inflationAdjustedReturn * 100
+
+	// Round to two decimal places
+	inflationAdjustedReturn = float32(math.Round(float64(inflationAdjustedReturn)*100) / 100)
+
+	// Prepare the response body
+	responseBody := map[string]float32{
+		"real_rate_of_return": inflationAdjustedReturn,
+	}
+
+	// Create and return the response
+	return NewResponse(http.StatusOK, responseBody, "application/json", nil), nil
 }
 
 // Calculate return on investment (ROI)
@@ -140,7 +164,18 @@ func (h *APIHandler) POSTInvestmentRoi(ctx context.Context, reqBody InvestmentRo
 
 	// return NewResponse(422, {}, "", responseHeaders), nil
 
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTInvestmentRoi operation has not been implemented yet"}, "application/json", nil), nil
+	roi := ((reqBody.Earning - reqBody.InitialInvestment) / reqBody.InitialInvestment) * 100
+
+	// Round to two decimal places
+	roi = float32(math.Round(float64(roi)*100) / 100)
+
+	// Prepare the response body
+	responseBody := map[string]float32{
+		"roi": roi,
+	}
+
+	// Create and return the response
+	return NewResponse(http.StatusOK, responseBody, "application/json", nil), nil
 }
 
 // Calculate loan payment
@@ -153,12 +188,26 @@ func (h *APIHandler) POSTLoanPayment(ctx context.Context, reqBody LoanPaymentBod
 
 	// return NewResponse(422, {}, "", responseHeaders), nil
 
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTLoanPayment operation has not been implemented yet"}, "application/json", nil), nil
+	monthlyRate := reqBody.Rate / 12 / 100
+
+	// Calculate monthly payment using the loan payment formula
+	payment := reqBody.Principal * (monthlyRate * float32(math.Pow(1+float64(monthlyRate), float64(reqBody.NumPayments)))) / (float32(math.Pow(1+float64(monthlyRate), float64(reqBody.NumPayments))) - 1)
+
+	// Round to two decimal places
+	payment = float32(math.Round(float64(payment)*100) / 100)
+
+	// Prepare the response body
+	responseBody := map[string]float32{
+		"payment": payment,
+	}
+
+	// Create and return the response
+	return NewResponse(http.StatusOK, responseBody, "application/json", nil), nil
 }
 
 // Allows you to compare your salary growth rate to inflation
 // Calculate your salary growth rate over a period of years
-func (h *APIHandler) POSTSalaryGrowthRate(ctx context.Context) (Response, error) {
+func (h *APIHandler) POSTSalaryGrowthRate(ctx context.Context, reqBody []SalaryGrowthRateBody) (Response, error) {
 	// TODO: implement the POSTSalaryGrowthRate function to return the following responses
 
 	// return NewResponse(200, {}, "application/json", responseHeaders), nil
@@ -166,8 +215,35 @@ func (h *APIHandler) POSTSalaryGrowthRate(ctx context.Context) (Response, error)
 	// return NewResponse(400, {}, "", responseHeaders), nil
 
 	// return NewResponse(422, {}, "", responseHeaders), nil
+	if len(reqBody) < 2 {
+		return NewResponse(http.StatusBadRequest, ErrorMsg{"at least two records are required to calculate growth rate"}, "application/json", nil), nil
+	}
 
-	return NewResponse(http.StatusNotImplemented, ErrorMsg{"POSTSalaryGrowthRate operation has not been implemented yet"}, "application/json", nil), nil
+	// Sort records by year to ensure chronological order
+	sort.Slice(reqBody, func(i, j int) bool {
+		return reqBody[i].Year < reqBody[j].Year
+	})
+
+	initialSalary := reqBody[0].Salary
+	finalSalary := reqBody[len(reqBody)-1].Salary
+	years := reqBody[len(reqBody)-1].Year - reqBody[0].Year
+
+	// Ensure valid time frame and salary data
+	if years <= 0 || initialSalary <= 0 {
+		return NewResponse(http.StatusBadRequest, ErrorMsg{"invalid data for calculating growth rate"}, "application/json", nil), nil
+	}
+
+	// Calculate compound annual growth rate (CAGR)
+	growthRate := (math.Pow(float64(finalSalary/initialSalary), 1/years) - 1) * 100
+	growthRate = math.Round(growthRate*100) / 100 // Round to two decimal places
+
+	// Prepare the response body
+	responseBody := map[string]interface{}{
+		"percentage": growthRate,
+	}
+
+	// Create and return the response
+	return NewResponse(http.StatusOK, responseBody, "application/json", nil), nil
 }
 
 // Calculate simple interest
