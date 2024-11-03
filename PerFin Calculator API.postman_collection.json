@@ -1,0 +1,1337 @@
+{
+	"info": {
+		"_postman_id": "9be0ea24-4616-4b4d-9ccd-3e71f08c0554",
+		"name": "PerFin Calculator API",
+		"description": "Personal Finance calculator API that does those pesky calculations for you",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14134268",
+		"_collection_link": "https://teamworkspacesgrind.postman.co/workspace/My-Workspace~dbf6016d-cb71-485e-8b58-9ea3ba71c8de/collection/14134268-9be0ea24-4616-4b4d-9ccd-3e71f08c0554?action=share&source=collection_link&creator=14134268"
+	},
+	"item": [
+		{
+			"name": "simple-interest",
+			"item": [
+				{
+					"name": "Calculate simple interest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"principal\": 1000,\n  \"rate\": 10,\n  \"time\": 2,\n  \"period\": \"years\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/simple-interest",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"simple-interest"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful calculation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"period\": \"years\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/simple-interest",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"simple-interest"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"total\": \"<float>\"\n}"
+						},
+						{
+							"name": "Invalid input parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"period\": \"years\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/simple-interest",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"simple-interest"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"period\": \"years\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/simple-interest",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"simple-interest"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "compound-interest",
+			"item": [
+				{
+					"name": "Calculate compound interest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"principal\": 1000,\n  \"annual_rate\": 10,\n  \"time\": 2,\n  \"compound\": \"monthly\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/compound-interest",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"compound-interest"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful calculation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"annual_rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"coumpund\": \"daily (365)\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/compound-interest",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"compound-interest"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"total\": \"<float>\"\n}"
+						},
+						{
+							"name": "Invalid input parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"annual_rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"coumpund\": \"daily (365)\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/compound-interest",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"compound-interest"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"annual_rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"coumpund\": \"daily (365)\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/compound-interest",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"compound-interest"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "loan-payment",
+			"item": [
+				{
+					"name": "Calculate loan payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"principal\": 10000,\n  \"rate\": 28,\n  \"num_payments\": 10\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/loan-payment",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"loan-payment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful calculation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"num_payments\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/loan-payment",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"loan-payment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"payment\": \"<float>\"\n}"
+						},
+						{
+							"name": "Invalid input parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"num_payments\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/loan-payment",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"loan-payment"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"num_payments\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/loan-payment",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"loan-payment"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "inflation-adjusted-return",
+			"item": [
+				{
+					"name": "Calculate inflation-adjusted return",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nominal_rate\": \"<float>\",\n  \"inflation_rate\": \"<float>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/inflation-adjusted-return",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"inflation-adjusted-return"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful calculation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nominal_rate\": \"<float>\",\n  \"inflation_rate\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/inflation-adjusted-return",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"inflation-adjusted-return"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"real_rate_of_return\": \"<float>\"\n}"
+						},
+						{
+							"name": "Invalid input parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nominal_rate\": \"<float>\",\n  \"inflation_rate\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/inflation-adjusted-return",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"inflation-adjusted-return"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nominal_rate\": \"<float>\",\n  \"inflation_rate\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/inflation-adjusted-return",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"inflation-adjusted-return"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "fixed-deposit-maturity",
+			"item": [
+				{
+					"name": "Calculate fixed deposit maturity value",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"compounding_frequency\": \"annually\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/fixed-deposit-maturity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"fixed-deposit-maturity"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful calculation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"compounding_frequency\": \"annually\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/fixed-deposit-maturity",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"fixed-deposit-maturity"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"maturity_value\": \"<float>\"\n}"
+						},
+						{
+							"name": "Invalid input parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"compounding_frequency\": \"annually\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/fixed-deposit-maturity",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"fixed-deposit-maturity"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"principal\": \"<float>\",\n  \"rate\": \"<float>\",\n  \"time\": \"<float>\",\n  \"compounding_frequency\": \"annually\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/fixed-deposit-maturity",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"fixed-deposit-maturity"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "investment-roi",
+			"item": [
+				{
+					"name": "Calculate return on investment (ROI)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"initial_investment\": \"<float>\",\n  \"earnings\": \"<float>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/investment-roi",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"investment-roi"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful calculation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"initial_investment\": \"<float>\",\n  \"earnings\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/investment-roi",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"investment-roi"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"roi\": \"<float>\"\n}"
+						},
+						{
+							"name": "Invalid input parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"initial_investment\": \"<float>\",\n  \"earnings\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/investment-roi",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"investment-roi"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"initial_investment\": \"<float>\",\n  \"earnings\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/investment-roi",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"investment-roi"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "salary-growth-rate",
+			"item": [
+				{
+					"name": "Calculate your salary growth rate over a period of years",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"salary\": \"<float>\",\n    \"year\": \"<number>\"\n  },\n  {\n    \"salary\": \"<float>\",\n    \"year\": \"<number>\"\n  }\n]",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/salary-growth-rate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"salary-growth-rate"
+							]
+						},
+						"description": "Allows you to compare your salary growth rate to inflation"
+					},
+					"response": [
+						{
+							"name": "Successful calculation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"salary\": \"<float>\",\n    \"year\": \"<number>\"\n  },\n  {\n    \"salary\": \"<float>\",\n    \"year\": \"<number>\"\n  }\n]",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/salary-growth-rate",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"salary-growth-rate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"percentage\": \"<float>\"\n}"
+						},
+						{
+							"name": "Invalid input parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"salary\": \"<float>\",\n    \"year\": \"<number>\"\n  },\n  {\n    \"salary\": \"<float>\",\n    \"year\": \"<number>\"\n  }\n]",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/salary-growth-rate",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"salary-growth-rate"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"salary\": \"<float>\",\n    \"year\": \"<number>\"\n  },\n  {\n    \"salary\": \"<float>\",\n    \"year\": \"<number>\"\n  }\n]",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/salary-growth-rate",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"salary-growth-rate"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "financial-independence-number",
+			"item": [
+				{
+					"name": "Calculate Financial Independence (FI) Number",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"annual_expenses\": \"<float>\",\n  \"withdrawal_rate\": \"<float>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/financial-independence-number",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"financial-independence-number"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Successful calculation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annual_expenses\": \"<float>\",\n  \"withdrawal_rate\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/financial-independence-number",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"financial-independence-number"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"fi_number\": \"<float>\"\n}"
+						},
+						{
+							"name": "Invalid input parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annual_expenses\": \"<float>\",\n  \"withdrawal_rate\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/financial-independence-number",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"financial-independence-number"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Validation exception",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annual_expenses\": \"<float>\",\n  \"withdrawal_rate\": \"<float>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/financial-independence-number",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"financial-independence-number"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		}
+	]
+}
